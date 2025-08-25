@@ -253,7 +253,7 @@ with tabs[2]:
 
 
 # -------------------------
-# 📈 ANÁLISE DE DADOS (com sub-abas)
+# 📈 ANÁLISE DE DADOS
 # -------------------------
 with tabs[3]:
     st.header("Análise de Dados")
@@ -274,13 +274,14 @@ with tabs[3]:
         st.subheader("Tipos de Variáveis e % de Nulos")
         st.dataframe(tabela_tipos(df).head(200), use_container_width=True, height=280)
 
-        if not MODO_LEVE:
-            st.info(
+        
+        st.info(
                 "**Perguntas de análise sugeridas**  \n"
-                "- Valor médio dos pedidos por categoria/status?  \n"
-                "- Diferença entre B2B e não-B2B no valor médio?  \n"
-                "- Relação entre quantidade (Qty) e valor do pedido?  "
+                "- Qual o valor médio dos pedidos por categoria/status?  \n"
+                "- Existe diferença significativa entre pedidos B2B e não-B2B?  \n"
+                "- Há correlação entre quantidade (Qty) e valor do pedido?  "
             )
+
 
     # ---------- 🧮 Estatísticas ----------
     with sub[1]:
@@ -322,6 +323,10 @@ with tabs[3]:
     # ---------- 🧪 Teste t (Welch) ----------
     with sub[2]:
         st.subheader("Intervalos de Confiança & Teste de Hipótese (t de Welch)")
+        st.markdown("""
+            **Justificativa do Teste t de Welch**  
+            O teste t de Welch foi escolhido por ser apropriado para comparar médias de dois grupos com variâncias possivelmente diferentes e tamanhos de amostra distintos.  
+            """)
         if st.toggle("Executar teste entre dois grupos", value=not MODO_LEVE, key="welch_toggle"):
             col_a, col_b = st.columns(2)
             with col_a:
@@ -394,6 +399,7 @@ with tabs[3]:
                         st.warning(f"Amostra insuficiente. {cat1}: n={len(df_a)} | {cat2}: n={len(df_b)}")
             else:
                 st.info("Selecione uma **métrica numérica** e um **grupo categórico** para comparar dois grupos.")
+
 
     # ---------- 📈 Gráficos ----------
     with sub[3]:
